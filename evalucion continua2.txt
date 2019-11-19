@@ -1,0 +1,258 @@
+Microsoft Windows [Versión 10.0.17763.107]
+(c) 2018 Microsoft Corporation. Todos los derechos reservados.
+
+C:\Users\Administrador>sqlplus
+
+SQL*Plus: Release 11.2.0.2.0 Production on Mar Nov 19 10:07:49 2019
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Enter user-name: jose
+Enter password:
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> connec sys/oracle as sysdba
+Connected.
+SQL> create user jose IDENTIFIED BY 1234;
+create user jose IDENTIFIED BY 1234
+            *
+ERROR at line 1:
+ORA-01920: user name 'JOSE' conflicts with another user or role name
+
+
+SQL> create user luis identified by 12345;
+create user luis identified by 12345
+            *
+ERROR at line 1:
+ORA-01920: user name 'LUIS' conflicts with another user or role name
+
+
+SQL> create user carlos identified by 123;
+
+User created.
+
+SQL> grant connect, resource to carlos;
+
+Grant succeeded.
+
+SQL> connec carlos/123;
+Connected.
+SQL> show user
+USER is "CARLOS"
+SQL> create table categoria(
+  2  id codigo number(2,0) primary key,
+  3  descripcion varchar(50)not null,
+  4  );
+id codigo number(2,0) primary key,
+          *
+ERROR at line 2:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table categoria(
+  2  codigo number(5,0)not null primary key,
+  3  descripcion varchar(50);
+descripcion varchar(50)
+                      *
+ERROR at line 3:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table categoria(
+  2  codigo number(5,0)not nul primary,
+  3
+SQL>
+SQL> create table categoria(
+  2  codigo number(5,0)not null primary key,
+  3  descripcion varchar(50)not null);
+
+Table created.
+
+SQL> create table usuario(
+  2  codigo number(5,0)not null primary key,
+  3  nombre varchar(50)not null,
+  4  password varchar(50)not null);
+
+Table created.
+
+SQL> create table producto(
+  2  codigo number(5,0)not null primary key,
+  3  nombre varchar(50)not null,
+  4  precio_unitario number(50);
+precio_unitario number(50)
+                       *
+ERROR at line 4:
+ORA-01727: numeric precision specifier is out of range (1 to 38)
+
+
+SQL> create table producto(
+  2  codigo number(5,0)not null primary key,
+  3  nombre varchar(50)not null,
+  4  precio_unitario varchar(50)not null);
+
+Table created.
+
+SQL> create sequence sq_producto;
+
+Sequence created.
+
+SQL> insert into producto
+  2  values
+  3  );
+)
+*
+ERROR at line 3:
+ORA-00936: missing expression
+
+
+SQL> create sequence sq_categoria;
+
+Sequence created.
+
+SQL> insert into categoria
+  2  values(sq_categoria.nextval,'a19100','docente');
+insert into categoria
+            *
+ERROR at line 1:
+ORA-00913: too many values
+
+
+SQL> insert into categoria
+  2  values(sq_categoria.nextval,'2','docente');
+insert into categoria
+            *
+ERROR at line 1:
+ORA-00913: too many values
+
+
+SQL> insert into categoria
+  2  values(sq_categoria.nextval,'5','docente');
+insert into categoria
+            *
+ERROR at line 1:
+ORA-00913: too many values
+
+
+SQL> insert into categoria
+  2  values(sq_categoria.nextval,'12345','docente');
+insert into categoria
+            *
+ERROR at line 1:
+ORA-00913: too many values
+
+
+SQL> insert into categoria
+  2  values(sq_categoria.nextval,'docente');
+
+1 row created.
+
+SQL> insert into categoria
+  2  values(sq_categoria.nextval,'alumno');
+
+1 row created.
+
+SQL> insert into usuario
+  2  values(sq_categoria.nextval,'jose');
+insert into usuario
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> insert into usuario
+  2  values(sq_usuario.nextval,'jose');
+insert into usuario
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> insert into usuario
+  2  values(sq_usuario.nextval,'jose','1234');
+values(sq_usuario.nextval,'jose','1234')
+       *
+ERROR at line 2:
+ORA-02289: sequence does not exist
+
+
+SQL> insert into usuario
+  2  values(sq_usuario.nextval,'jose','1aa2');
+values(sq_usuario.nextval,'jose','1aa2')
+       *
+ERROR at line 2:
+ORA-02289: sequence does not exist
+
+
+SQL> create sequence sq_usuario;
+
+Sequence created.
+
+SQL> create sequence sq_producto;
+create sequence sq_producto
+                *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> insert into usuario
+  2  values(sq_usuario.nextval,'jose','123');
+
+1 row created.
+
+SQL> insert into usuario
+  2  values(sq_usuario.nextval,'alberto','1234');
+
+1 row created.
+
+SQL> insert into producto
+  2  values(sq_producto.nextval,'leche','4');
+
+1 row created.
+
+SQL> values(sq_producto.nextval,'arroz','5');
+SP2-0734: unknown command beginning "values(sq_..." - rest of line ignored.
+SQL> insert into producto
+  2  values(sq_producto.nextval,'arroz','5');
+
+1 row created.
+
+SQL> select * from categoria;
+
+    CODIGO DESCRIPCION
+---------- --------------------------------------------------
+         1 docente
+         2 alumno
+
+SQL> select * from usuario;
+
+    CODIGO NOMBRE
+---------- --------------------------------------------------
+PASSWORD
+--------------------------------------------------
+         1 jose
+123
+
+         2 alberto
+1234
+
+
+SQL> select * from producto;
+
+    CODIGO NOMBRE
+---------- --------------------------------------------------
+PRECIO_UNITARIO
+--------------------------------------------------
+         1 leche
+4
+
+         2 arroz
+5
+
+
+SQL> commit;
+
+Commit complete.
+
+SQL>
